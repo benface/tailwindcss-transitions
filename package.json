@@ -4,13 +4,21 @@
   "description": "Tailwind CSS plugin to generate transition utilities",
   "author": "Benoît Rouleau <benoit.rouleau@icloud.com>",
   "license": "ISC",
-  "repository": "https://github.com/benface/tailwindcss-transitions.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benface/tailwindcss-transitions.git"
+  },
   "bugs": "https://github.com/benface/tailwindcss-transitions/issues",
   "homepage": "https://github.com/benface/tailwindcss-transitions",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "release": "release-it && github-release-from-changelog"
   },
   "dependencies": {
     "lodash": "^4.17.10"
+  },
+  "devDependencies": {
+    "github-release-from-changelog": "^1.3.2",
+    "release-it": "^7.6.2"
   }
 }
