@@ -12,7 +12,7 @@
   "homepage": "https://github.com/benface/tailwindcss-transitions",
   "scripts": {
     "test": "node test.js",
-    "release": "release-it && github-release-from-changelog"
+    "release": "f(){ release-it $1 && github-release-from-changelog ;};f"
   },
   "dependencies": {
     "lodash": "^4.17.10"
