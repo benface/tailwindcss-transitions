@@ -47,7 +47,7 @@ module.exports = ({
             return null;
           }
           return {
-            [`.transition-delay-${e(name)}`]: { transitionDelay: value },
+            [`.${e(`transition-delay-${name}`)}`]: { transitionDelay: value },
           };
         }),
         ..._.map(willChange, (value, name) => ({
