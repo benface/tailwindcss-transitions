@@ -160,3 +160,21 @@ test('all the options are working together as they should', () => {
     `);
   });
 });
+
+test('variants are supported', () => {
+  return generatePluginCss({
+    variants: ['hover', 'active'],
+  }).then(css => {
+    expect(css).toMatchCss(`
+      .transition-none {
+        transition: none;
+      }
+      .hover\\:transition-none:hover {
+        transition: none;
+      }
+      .active\\:transition-none:active {
+        transition: none;
+      }
+    `);
+  });
+});
