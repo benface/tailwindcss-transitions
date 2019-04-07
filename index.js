@@ -1,60 +1,137 @@
 const _ = require('lodash');
 
-module.exports = ({
-  variants = {},
-  properties = {},
-  durations = {},
-  timingFunctions = {},
-  delays = {},
-  willChange = {},
-} = {}) => ({ e, addUtilities }) => {
-  const defaultDuration = durations.default || '500ms';
-  addUtilities(
-    {
-      '.transition-none': { transition: 'none' },
-      ...Object.assign(
-        {},
-        ..._.map(properties, (values, name) => ({
-          [`.${e(`transition-${name}`)}`]: {
-            transition: (() => {
-              if (!_.isArray(values)) {
-                values = [values];
-              }
-              return values.map(value => `${value} ${defaultDuration}`
-                  + `${timingFunctions.default ? ` ${timingFunctions.default}` : ''}`
-                  + `${delays.default ? ` ${delays.default}` : ''}`).join(', ');
-            })(),
+module.exports = function(options = {}) {
+  return ({ config, e, addBase, addUtilities }) => {
+    const defaultPropertyTheme = {
+      'default': 'all',
+      'none': 'none',
+      'color': 'color',
+      'bg': 'background-color',
+      'border': 'border-color',
+      'colors': ['color', 'background-color', 'border-color'],
+      'opacity': 'opacity',
+      'transform': 'transform',
+    };
+    const defaultPropertyVariants = ['responsive'];
+    const defaultDurationTheme = {
+      'default': '250ms',
+      '0': '0ms',
+      '100': '100ms',
+      '250': '250ms',
+      '500': '500ms',
+      '750': '750ms',
+      '1000': '1000ms',
+    };
+    const defaultDurationVariants = ['responsive'];
+    const defaultTimingFunctionTheme = {
+      'default': 'ease',
+      'linear': 'linear',
+      'ease': 'ease',
+      'ease-in': 'ease-in',
+      'ease-out': 'ease-out',
+      'ease-in-out': 'ease-in-out',
+    };
+    const defaultTimingFunctionVariants = ['responsive'];
+    const defaultDelayTheme = {
+      'default': '0ms',
+      '0': '0ms',
+      '100': '100ms',
+      '250': '250ms',
+      '500': '500ms',
+      '750': '750ms',
+      '1000': '1000ms',
+    };
+    const defaultDelayVariants = ['responsive'];
+    const defaultWillChangeTheme = {
+      'default': 'contents',
+      'auto': 'auto',
+      'scroll': 'scroll-position',
+      'opacity': 'opacity',
+      'transform': 'transform',
+    };
+    const defaultWillChangeVariants = ['responsive'];
+
+    const defaultDuration = config('theme.transitionDuration.default', defaultDurationTheme.default);
+    const defaultTimingFunction = config('theme.transitionTimingFunction.default', defaultTimingFunctionTheme.default);
+    const defaultDelay = config('theme.transitionDelay.default', defaultDelayTheme.default);
+    const baseStyles = {
+      '*': {
+        transitionProperty: 'none',
+        transitionDuration: _.includes(['0', '0s', '0ms'], defaultDuration) ? null : defaultDuration,
+        transitionTimingFunction: defaultTimingFunction === 'ease' ? null : defaultTimingFunction,
+        transitionDelay: _.includes(['0', '0s', '0ms'], defaultDelay) ? null : defaultDelay,
+      }
+    };
+
+    const propertyUtilities = _.fromPairs(
+      _.map(config('theme.transitionProperty', defaultPropertyTheme), (value, modifier) => {
+        return [
+          `.${e(`transition${modifier === 'default' ? '' : `-${modifier}`}`)}`,
+          {
+            transitionProperty: _.isArray(value) ? value.join(', ') : value,
           },
-        })),
-        ..._.map(durations, (value, name) => {
-          if (name === 'default') {
-            return null;
-          }
-          return {
-            [`.${e(`transition-duration-${name}`)}`]: { transitionDuration: value },
-          };
-        }),
-        ..._.map(timingFunctions, (value, name) => {
-          if (name === 'default') {
-            return null;
-          }
-          return {
-            [`.${e(`transition-timing-${name}`)}`]: { transitionTimingFunction: value },
-          };
-        }),
-        ..._.map(delays, (value, name) => {
-          if (name === 'default') {
-            return null;
-          }
-          return {
-            [`.${e(`transition-delay-${name}`)}`]: { transitionDelay: value },
-          };
-        }),
-        ..._.map(willChange, (value, name) => ({
-          [`.${e(`will-change-${name}`)}`]: { willChange: value },
-        })),
-      ),
-    },
-    variants,
-  );
+        ];
+      })
+    );
+
+    const durationUtilities = _.fromPairs(
+      _.map(config('theme.transitionDuration', defaultDurationTheme), (value, modifier) => {
+        if (modifier === 'default') {
+          return [];
+        }
+        return [
+          `.${e(`transition-${modifier}`)}`,
+          {
+            transitionDuration: value,
+          },
+        ];
+      })
+    );
+
+    const timingFunctionUtilities = _.fromPairs(
+      _.map(config('theme.transitionTimingFunction', defaultTimingFunctionTheme), (value, modifier) => {
+        if (modifier === 'default') {
+          return [];
+        }
+        return [
+          `.${e(`transition-${modifier}`)}`,
+          {
+            transitionTimingFunction: value,
+          },
+        ];
+      })
+    );
+
+    const delayUtilities = _.fromPairs(
+      _.map(config('theme.transitionDelay', defaultDelayTheme), (value, modifier) => {
+        if (modifier === 'default') {
+          return [];
+        }
+        return [
+          `.${e(`transition-delay-${modifier}`)}`,
+          {
+            transitionDelay: value,
+          },
+        ];
+      })
+    );
+
+    const willChangeUtilities = _.fromPairs(
+      _.map(config('theme.willChange', defaultWillChangeTheme), (value, modifier) => {
+        return [
+          `.${e(`will-change${modifier === 'default' ? '' : `-${modifier}`}`)}`,
+          {
+            willChange: value,
+          },
+        ];
+      })
+    );
+
+    addBase(baseStyles);
+    addUtilities(propertyUtilities, config('variants.transitionProperty', defaultPropertyVariants));
+    addUtilities(durationUtilities, config('variants.transitionDuration', defaultDurationVariants));
+    addUtilities(timingFunctionUtilities, config('variants.transitionTimingFunction', defaultTimingFunctionVariants));
+    addUtilities(delayUtilities, config('variants.transitionDelay', defaultDelayVariants));
+    addUtilities(willChangeUtilities, config('variants.willChange', defaultWillChangeVariants));
+  };
 };
