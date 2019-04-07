@@ -13,8 +13,8 @@ npm install tailwindcss-transitions
 {
   theme: {
     transitionProperty: { // defaults to these values
-      'default': 'all',
       'none': 'none',
+      'all': 'all',
       'color': 'color',
       'bg': 'background-color',
       'border': 'border-color',
@@ -49,9 +49,9 @@ npm install tailwindcss-transitions
       '1000': '1000ms',
     },
     willChange: { // defaults to these values
-      'default': 'contents',
       'auto': 'auto',
       'scroll': 'scroll-position',
+      'contents': 'contents',
       'opacity': 'opacity',
       'transform': 'transform',
     },
@@ -128,4 +128,4 @@ This plugin generates the following utilities:
 }
 ```
 
-Note: All the theme objects optionally accept a `default` key. For `transitionProperty` and `willChange`, that key generates a simple `transition` / `will-change` class (instead of `transition-default` / `will-change-default`). For `transitionDuration`, `transitionTimingFunction`, and `transitionDelay`, the `default` key doesn’t generate any class; it is used to generate base styles applied to all elements (`*`) so that you can use one of the `transition-[property]` classes without having to define a duration, timing function, or delay every time. Therefore, with no configuration, simply adding the `transition` class to an element applies a `250ms` transition to `all` its properties.
+Note: The `transitionDuration`, `transitionTimingFunction`, and `transitionDelay` theme objects optionally accept a `default` key that doesn’t generate any class; it is used to generate base styles applied to all elements (`*`) so that you can use one of the `transition-[property]` classes without having to define a duration, timing function, or delay every time.

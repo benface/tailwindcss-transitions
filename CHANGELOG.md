@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project mostly adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0-beta.2] - 2019-04-07
+
+### Removed
+- Removed `transitionProperty` and `willChange`’s `default` key feature introduced in beta 1; it is confusing because the behaviour is different from the other `default` keys in this plugin, but also because it’s not clear what the classes do... it’s better to be explicit (e.g. `transition-all` and `will-change-contents`)
+
 ## [2.0.0-beta.1] - 2019-04-07
 
 ### Added
@@ -46,7 +51,8 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 Initial release
 
-[Unreleased]: https://github.com/benface/tailwindcss-transitions/compare/v2.0.0-beta.1...HEAD
+[Unreleased]: https://github.com/benface/tailwindcss-transitions/compare/v2.0.0-beta.2...HEAD
+[2.0.0-beta.2]: https://github.com/benface/tailwindcss-transitions/compare/v2.0.0-beta.1...v2.0.0-beta.2
 [2.0.0-beta.1]: https://github.com/benface/tailwindcss-transitions/compare/v1.0.4...v2.0.0-beta.1
 [1.0.4]: https://github.com/benface/tailwindcss-transitions/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/benface/tailwindcss-transitions/compare/v1.0.2...v1.0.3

@@ -3,8 +3,8 @@ const _ = require('lodash');
 module.exports = function(options = {}) {
   return ({ config, e, addBase, addUtilities }) => {
     const defaultPropertyTheme = {
-      'default': 'all',
       'none': 'none',
+      'all': 'all',
       'color': 'color',
       'bg': 'background-color',
       'border': 'border-color',
@@ -43,9 +43,9 @@ module.exports = function(options = {}) {
     };
     const defaultDelayVariants = ['responsive'];
     const defaultWillChangeTheme = {
-      'default': 'contents',
       'auto': 'auto',
       'scroll': 'scroll-position',
+      'contents': 'contents',
       'opacity': 'opacity',
       'transform': 'transform',
     };
@@ -66,7 +66,7 @@ module.exports = function(options = {}) {
     const propertyUtilities = _.fromPairs(
       _.map(config('theme.transitionProperty', defaultPropertyTheme), (value, modifier) => {
         return [
-          `.${e(`transition${modifier === 'default' ? '' : `-${modifier}`}`)}`,
+          `.${e(`transition-${modifier}`)}`,
           {
             transitionProperty: _.isArray(value) ? value.join(', ') : value,
           },
@@ -119,7 +119,7 @@ module.exports = function(options = {}) {
     const willChangeUtilities = _.fromPairs(
       _.map(config('theme.willChange', defaultWillChangeTheme), (value, modifier) => {
         return [
-          `.${e(`will-change${modifier === 'default' ? '' : `-${modifier}`}`)}`,
+          `.${e(`will-change-${modifier}`)}`,
           {
             willChange: value,
           },

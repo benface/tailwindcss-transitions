@@ -49,11 +49,11 @@ test('the plugin generates some utilities and responsive variants by default', (
         transition-property: none;
         transition-duration: 250ms;
       }
-      .transition {
-        transition-property: all;
-      }
       .transition-none {
         transition-property: none;
+      }
+      .transition-all {
+        transition-property: all;
       }
       .transition-color {
         transition-property: color;
@@ -124,14 +124,14 @@ test('the plugin generates some utilities and responsive variants by default', (
       .transition-delay-1000 {
         transition-delay: 1000ms;
       }
-      .will-change {
-        will-change: contents;
-      }
       .will-change-auto {
         will-change: auto;
       }
       .will-change-scroll {
         will-change: scroll-position;
+      }
+      .will-change-contents {
+        will-change: contents;
       }
       .will-change-opacity {
         will-change: opacity;
@@ -139,13 +139,12 @@ test('the plugin generates some utilities and responsive variants by default', (
       .will-change-transform {
         will-change: transform;
       }
-
       @media (min-width: 640px) {
-        .sm\\:transition {
-          transition-property: all;
-        }
         .sm\\:transition-none {
           transition-property: none;
+        }
+        .sm\\:transition-all {
+          transition-property: all;
         }
         .sm\\:transition-color {
           transition-property: color;
@@ -216,14 +215,14 @@ test('the plugin generates some utilities and responsive variants by default', (
         .sm\\:transition-delay-1000 {
           transition-delay: 1000ms;
         }
-        .sm\\:will-change {
-          will-change: contents;
-        }
         .sm\\:will-change-auto {
           will-change: auto;
         }
         .sm\\:will-change-scroll {
           will-change: scroll-position;
+        }
+        .sm\\:will-change-contents {
+          will-change: contents;
         }
         .sm\\:will-change-opacity {
           will-change: opacity;
@@ -240,8 +239,8 @@ test('the default duration, timing function and delay can be changed', () => {
   return generatePluginCss({
     theme: {
       transitionProperty: {
-        'default': 'all',
         'none': 'none',
+        'all': 'all',
       },
       transitionDuration: {
         'default': '500ms',
@@ -269,11 +268,11 @@ test('the default duration, timing function and delay can be changed', () => {
         transition-timing-function: linear;
         transition-delay: 100ms;
       }
-      .transition {
-        transition-property: all;
-      }
       .transition-none {
         transition-property: none;
+      }
+      .transition-all {
+        transition-property: all;
       }
     `);
   });
@@ -283,7 +282,6 @@ test('utilities can be customized', () => {
   return generatePluginCss({
     theme: {
       transitionProperty: {
-        'default': ['opacity', 'transform'],
         'opacity': 'opacity',
         'transform': 'transform',
       },
@@ -296,9 +294,12 @@ test('utilities can be customized', () => {
         'ease': 'ease',
         'linear': 'linear',
       },
-      transitionDelay: {},
+      transitionDelay: {
+        '1/2s': '0.5s',
+      },
       willChange: {
-        'default': 'opacity',
+        'opacity': 'opacity',
+        'transform': 'transform',
       },
     },
     variants: {
@@ -313,9 +314,6 @@ test('utilities can be customized', () => {
       * {
         transition-property: none;
         transition-duration: 250ms;
-      }
-      .transition {
-        transition-property: opacity, transform;
       }
       .transition-opacity {
         transition-property: opacity;
@@ -338,8 +336,14 @@ test('utilities can be customized', () => {
       .transition-linear {
         transition-timing-function: linear;
       }
-      .will-change {
+      .transition-delay-1\\/2s {
+        transition-delay: .5s;
+      }
+      .will-change-opacity {
         will-change: opacity;
+      }
+      .will-change-transform {
+        will-change: transform;
       }
     `);
   });
@@ -349,8 +353,8 @@ test('variants can be customized', () => {
   return generatePluginCss({
     theme: {
       transitionProperty: {
-        'default': 'all',
         'none': 'none',
+        'all': 'all',
       },
       transitionDuration: {
         '500': '500ms',
@@ -363,7 +367,7 @@ test('variants can be customized', () => {
         '500': '500ms',
       },
       willChange: {
-        'default': 'contents',
+        'contents': 'contents',
       },
     },
     variants: {
@@ -379,17 +383,17 @@ test('variants can be customized', () => {
         transition-property: none;
         transition-duration: 250ms;
       }
-      .transition {
-        transition-property: all;
-      }
       .transition-none {
         transition-property: none;
       }
-      .hover\\:transition:hover {
+      .transition-all {
         transition-property: all;
       }
       .hover\\:transition-none:hover {
         transition-property: none;
+      }
+      .hover\\:transition-all:hover {
+        transition-property: all;
       }
       .transition-500 {
         transition-duration: 500ms;
@@ -418,7 +422,7 @@ test('variants can be customized', () => {
       .transition-delay-500 {
         transition-delay: 500ms;
       }
-      .will-change {
+      .will-change-contents {
         will-change: contents;
       }
       @media (min-width: 640px) {
