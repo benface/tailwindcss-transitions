@@ -9,7 +9,7 @@ npm install tailwindcss-transitions
 ## Usage
 
 ```js
-// In your Tailwind CSS config
+// tailwind.config.js
 {
   theme: {
     transitionProperty: { // defaults to these values
@@ -56,12 +56,12 @@ npm install tailwindcss-transitions
       'transform': 'transform',
     },
   },
-  variants: {
-    transitionProperty: ['responsive'], // defaults to ['responsive']
-    transitionDuration: ['responsive'], // defaults to ['responsive']
-    transitionTimingFunction: ['responsive'], // defaults to ['responsive']
-    transitionDelay: ['responsive'], // defaults to ['responsive']
-    willChange: ['responsive'], // defaults to ['responsive']
+  variants: { // all the following default to ['responsive']
+    transitionProperty: ['responsive'],
+    transitionDuration: ['responsive'],
+    transitionTimingFunction: ['responsive'],
+    transitionDelay: ['responsive'],
+    willChange: ['responsive'],
   },
   plugins: [
     require('tailwindcss-transitions')(),

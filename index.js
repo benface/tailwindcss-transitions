@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-module.exports = function(options = {}) {
+module.exports = function() {
   return ({ config, e, addBase, addUtilities }) => {
     const defaultPropertyTheme = {
       'none': 'none',
