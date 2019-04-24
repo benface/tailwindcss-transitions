@@ -73,11 +73,11 @@ This plugin generates the following utilities:
 
 ```css
 /* configurable with the "transitionProperty" theme object */
-.transition {
-  transition-property: all;
-}
 .transition-none {
   transition-property: none;
+}
+.transition-all {
+  transition-property: all;
 }
 .transition-[key] {
   transition-property: [value];
