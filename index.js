@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 module.exports = function() {
-  return ({ config, e, addBase, addUtilities }) => {
+  return ({ config, e, addBase, addUtilities, variants }) => {
     const defaultPropertyTheme = {
       'none': 'none',
       'all': 'all',
@@ -128,10 +128,10 @@ module.exports = function() {
     );
 
     addBase(baseStyles);
-    addUtilities(propertyUtilities, config('variants.transitionProperty', defaultPropertyVariants));
-    addUtilities(durationUtilities, config('variants.transitionDuration', defaultDurationVariants));
-    addUtilities(timingFunctionUtilities, config('variants.transitionTimingFunction', defaultTimingFunctionVariants));
-    addUtilities(delayUtilities, config('variants.transitionDelay', defaultDelayVariants));
-    addUtilities(willChangeUtilities, config('variants.willChange', defaultWillChangeVariants));
+    addUtilities(propertyUtilities, variants('transitionProperty', defaultPropertyVariants));
+    addUtilities(durationUtilities, variants('transitionDuration', defaultDurationVariants));
+    addUtilities(timingFunctionUtilities, variants('transitionTimingFunction', defaultTimingFunctionVariants));
+    addUtilities(delayUtilities, variants('transitionDelay', defaultDelayVariants));
+    addUtilities(willChangeUtilities, variants('willChange', defaultWillChangeVariants));
   };
 };
