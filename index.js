@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 module.exports = function() {
-  return ({ config, e, addBase, addUtilities, variants }) => {
+  return ({ theme, variants, e, addBase, addUtilities }) => {
     const defaultPropertyTheme = {
       'none': 'none',
       'all': 'all',
@@ -51,11 +51,23 @@ module.exports = function() {
     };
     const defaultWillChangeVariants = ['responsive'];
 
-    const defaultDuration = config('theme.transitionDuration.default', defaultDurationTheme.default);
-    const defaultTimingFunction = config('theme.transitionTimingFunction.default', defaultTimingFunctionTheme.default);
-    const defaultDelay = config('theme.transitionDelay.default', defaultDelayTheme.default);
+    const propertyTheme = theme('transitionProperty', defaultPropertyTheme);
+    const propertyVariants = variants('transitionProperty', defaultPropertyVariants);
+    const durationTheme = theme('transitionDuration', defaultDurationTheme);
+    const durationVariants = variants('transitionDuration', defaultDurationVariants);
+    const timingFunctionTheme = theme('transitionTimingFunction', defaultTimingFunctionTheme);
+    const timingFunctionVariants = variants('transitionTimingFunction', defaultTimingFunctionVariants);
+    const delayTheme = theme('transitionDelay', defaultDelayTheme);
+    const delayVariants = variants('transitionDelay', defaultDelayVariants);
+    const willChangeTheme = theme('willChange', defaultWillChangeTheme);
+    const willChangeVariants = variants('willChange', defaultWillChangeVariants);
+
+    const defaultDuration = _.defaults({}, durationTheme, defaultDurationTheme).default;
+    const defaultTimingFunction = _.defaults({}, timingFunctionTheme, defaultTimingFunctionTheme).default;
+    const defaultDelay = _.defaults({}, delayTheme, defaultDelayTheme).default;
+
     const baseStyles = {
-      '*': {
+      '*, *::before, *::after': {
         transitionProperty: 'none',
         transitionDuration: _.includes(['0', '0s', '0ms'], defaultDuration) ? null : defaultDuration,
         transitionTimingFunction: defaultTimingFunction === 'ease' ? null : defaultTimingFunction,
@@ -64,7 +76,7 @@ module.exports = function() {
     };
 
     const propertyUtilities = _.fromPairs(
-      _.map(config('theme.transitionProperty', defaultPropertyTheme), (value, modifier) => {
+      _.map(propertyTheme, (value, modifier) => {
         return [
           `.${e(`transition-${modifier}`)}`,
           {
@@ -75,7 +87,7 @@ module.exports = function() {
     );
 
     const durationUtilities = _.fromPairs(
-      _.map(config('theme.transitionDuration', defaultDurationTheme), (value, modifier) => {
+      _.map(durationTheme, (value, modifier) => {
         if (modifier === 'default') {
           return [];
         }
@@ -89,7 +101,7 @@ module.exports = function() {
     );
 
     const timingFunctionUtilities = _.fromPairs(
-      _.map(config('theme.transitionTimingFunction', defaultTimingFunctionTheme), (value, modifier) => {
+      _.map(timingFunctionTheme, (value, modifier) => {
         if (modifier === 'default') {
           return [];
         }
@@ -103,7 +115,7 @@ module.exports = function() {
     );
 
     const delayUtilities = _.fromPairs(
-      _.map(config('theme.transitionDelay', defaultDelayTheme), (value, modifier) => {
+      _.map(delayTheme, (value, modifier) => {
         if (modifier === 'default') {
           return [];
         }
@@ -117,7 +129,7 @@ module.exports = function() {
     );
 
     const willChangeUtilities = _.fromPairs(
-      _.map(config('theme.willChange', defaultWillChangeTheme), (value, modifier) => {
+      _.map(willChangeTheme, (value, modifier) => {
         return [
           `.${e(`will-change-${modifier}`)}`,
           {
@@ -128,10 +140,10 @@ module.exports = function() {
     );
 
     addBase(baseStyles);
-    addUtilities(propertyUtilities, variants('transitionProperty', defaultPropertyVariants));
-    addUtilities(durationUtilities, variants('transitionDuration', defaultDurationVariants));
-    addUtilities(timingFunctionUtilities, variants('transitionTimingFunction', defaultTimingFunctionVariants));
-    addUtilities(delayUtilities, variants('transitionDelay', defaultDelayVariants));
-    addUtilities(willChangeUtilities, variants('willChange', defaultWillChangeVariants));
+    addUtilities(propertyUtilities, propertyVariants);
+    addUtilities(durationUtilities, durationVariants);
+    addUtilities(timingFunctionUtilities, timingFunctionVariants);
+    addUtilities(delayUtilities, delayVariants);
+    addUtilities(willChangeUtilities, willChangeVariants);
   };
 };

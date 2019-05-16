@@ -128,4 +128,4 @@ This plugin generates the following utilities:
 }
 ```
 
-Note: The `transitionDuration`, `transitionTimingFunction`, and `transitionDelay` theme objects optionally accept a `default` key that doesn’t generate any class; it is used to generate base styles applied to all elements (`*`) so that you can use one of the `transition-[property]` classes without having to define a duration, timing function, or delay every time.
+Note: The `transitionDuration`, `transitionTimingFunction`, and `transitionDelay` theme objects optionally accept a `default` key that doesn’t generate any class; it is used to generate base styles applied to all elements and pseudo-elements (`*, *::before, *::after`) so that you can use one of the `transition-[property]` classes without having to define a duration, timing function, or delay every time.
