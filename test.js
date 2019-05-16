@@ -36,7 +36,7 @@ expect.extend({
 test('the plugin generates some utilities and responsive variants by default', () => {
   return generatePluginCss().then(css => {
     expect(css).toMatchCss(`
-      * {
+      *, *::before, *::after {
         transition-property: none;
         transition-duration: 250ms
       }
@@ -253,7 +253,7 @@ test('the default duration, timing function and delay can be changed', () => {
     },
   }).then(css => {
     expect(css).toMatchCss(`
-      * {
+      *, *::before, *::after {
         transition-property: none;
         transition-duration: 500ms;
         transition-timing-function: linear;
@@ -302,7 +302,7 @@ test('utilities can be customized', () => {
     },
   }).then(css => {
     expect(css).toMatchCss(`
-      * {
+      *, *::before, *::after {
         transition-property: none;
         transition-duration: 250ms
       }
@@ -370,7 +370,7 @@ test('variants can be customized', () => {
     },
   }).then(css => {
     expect(css).toMatchCss(`
-      * {
+      *, *::before, *::after {
         transition-property: none;
         transition-duration: 250ms
       }
