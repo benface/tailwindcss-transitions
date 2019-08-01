@@ -1,6 +1,6 @@
 {
   "name": "tailwindcss-transitions",
-  "version": "2.0.1",
+  "version": "2.1.0-beta.1",
   "description": "Tailwind CSS plugin to generate transition utilities",
   "author": "Benoît Rouleau <benoit.rouleau@icloud.com>",
   "license": "ISC",
