@@ -35,10 +35,6 @@ expect.extend({
 test('the plugin generates some utilities and responsive variants by default', () => {
   return generatePluginCss().then(css => {
     expect(css).toMatchCss(`
-      *, *::before, *::after {
-        transition-property: none;
-        transition-duration: 250ms;
-      }
       .transition-none {
         transition-property: none;
       }
@@ -63,22 +59,19 @@ test('the plugin generates some utilities and responsive variants by default', (
       .transition-transform {
         transition-property: transform;
       }
-      .transition-0 {
-        transition-duration: 0ms;
+      .transition-fast {
+        transition-duration: 200ms;
       }
-      .transition-100 {
-        transition-duration: 100ms;
+      .transition-medium {
+        transition-duration: 400ms;
       }
-      .transition-250 {
-        transition-duration: 250ms;
+      .transition-slow {
+        transition-duration: 600ms;
       }
-      .transition-500 {
-        transition-duration: 500ms;
+      .transition-slower {
+        transition-duration: 800ms;
       }
-      .transition-750 {
-        transition-duration: 750ms;
-      }
-      .transition-1000 {
+      .transition-slowest {
         transition-duration: 1000ms;
       }
       .transition-linear {
@@ -99,17 +92,17 @@ test('the plugin generates some utilities and responsive variants by default', (
       .transition-delay-0 {
         transition-delay: 0ms;
       }
-      .transition-delay-100 {
-        transition-delay: 100ms;
+      .transition-delay-200 {
+        transition-delay: 200ms;
       }
-      .transition-delay-250 {
-        transition-delay: 250ms;
+      .transition-delay-400 {
+        transition-delay: 400ms;
       }
-      .transition-delay-500 {
-        transition-delay: 500ms;
+      .transition-delay-600 {
+        transition-delay: 600ms;
       }
-      .transition-delay-750 {
-        transition-delay: 750ms;
+      .transition-delay-800 {
+        transition-delay: 800ms;
       }
       .transition-delay-1000 {
         transition-delay: 1000ms;
@@ -154,22 +147,19 @@ test('the plugin generates some utilities and responsive variants by default', (
         .sm\\:transition-transform {
           transition-property: transform;
         }
-        .sm\\:transition-0 {
-          transition-duration: 0ms;
+        .sm\\:transition-fast {
+          transition-duration: 200ms;
         }
-        .sm\\:transition-100 {
-          transition-duration: 100ms;
+        .sm\\:transition-medium {
+          transition-duration: 400ms;
         }
-        .sm\\:transition-250 {
-          transition-duration: 250ms;
+        .sm\\:transition-slow {
+          transition-duration: 600ms;
         }
-        .sm\\:transition-500 {
-          transition-duration: 500ms;
+        .sm\\:transition-slower {
+          transition-duration: 800ms;
         }
-        .sm\\:transition-750 {
-          transition-duration: 750ms;
-        }
-        .sm\\:transition-1000 {
+        .sm\\:transition-slowest {
           transition-duration: 1000ms;
         }
         .sm\\:transition-linear {
@@ -190,17 +180,17 @@ test('the plugin generates some utilities and responsive variants by default', (
         .sm\\:transition-delay-0 {
           transition-delay: 0ms;
         }
-        .sm\\:transition-delay-100 {
-          transition-delay: 100ms;
+        .sm\\:transition-delay-200 {
+          transition-delay: 200ms;
         }
-        .sm\\:transition-delay-250 {
-          transition-delay: 250ms;
+        .sm\\:transition-delay-400 {
+          transition-delay: 400ms;
         }
-        .sm\\:transition-delay-500 {
-          transition-delay: 500ms;
+        .sm\\:transition-delay-600 {
+          transition-delay: 600ms;
         }
-        .sm\\:transition-delay-750 {
-          transition-delay: 750ms;
+        .sm\\:transition-delay-800 {
+          transition-delay: 800ms;
         }
         .sm\\:transition-delay-1000 {
           transition-delay: 1000ms;
@@ -225,7 +215,158 @@ test('the plugin generates some utilities and responsive variants by default', (
   });
 });
 
-test('the default duration, timing function and delay can be changed', () => {
+test('setting a default duration adds base styles including transition-property: none', () => {
+  return generatePluginCss({
+    theme: {
+      transitionDuration: {
+        'default': '400ms',
+      },
+      transitionTimingFunction: {},
+      transitionDelay: {},
+      willChange: {},
+    },
+    variants: {
+      transitionProperty: [],
+    },
+  }).then(css => {
+    expect(css).toMatchCss(`
+      *, *::before, *::after {
+        transition-property: none;
+        transition-duration: 400ms;
+      }
+      .transition-none {
+        transition-property: none;
+      }
+      .transition-all {
+        transition-property: all;
+      }
+      .transition-color {
+        transition-property: color;
+      }
+      .transition-bg {
+        transition-property: background-color;
+      }
+      .transition-border {
+        transition-property: border-color;
+      }
+      .transition-colors {
+        transition-property: color, background-color, border-color;
+      }
+      .transition-opacity {
+        transition-property: opacity;
+      }
+      .transition-transform {
+        transition-property: transform;
+      }
+    `);
+  });
+});
+
+test('...but that can be customized by setting a default property', () => {
+  return generatePluginCss({
+    theme: {
+      transitionProperty: {
+        'default': ['color', 'background-color', 'border-color'],
+        'none': 'none',
+        'all': 'all',
+      },
+      transitionDuration: {
+        'default': '400ms',
+      },
+      transitionTimingFunction: {},
+      transitionDelay: {},
+      willChange: {},
+    },
+    variants: {
+      transitionProperty: [],
+    },
+  }).then(css => {
+    expect(css).toMatchCss(`
+      *, *::before, *::after {
+        transition-property: color, background-color, border-color;
+        transition-duration: 400ms;
+      }
+      .transition-none {
+        transition-property: none;
+      }
+      .transition-all {
+        transition-property: all;
+      }
+    `);
+  });
+});
+
+test('...which can even be "all"', () => {
+  return generatePluginCss({
+    theme: {
+      transitionProperty: {
+        'default': 'all',
+        'none': 'none',
+        'all': 'all',
+      },
+      transitionDuration: {
+        'default': '400ms',
+      },
+      transitionTimingFunction: {},
+      transitionDelay: {},
+      willChange: {},
+    },
+    variants: {
+      transitionProperty: [],
+    },
+  }).then(css => {
+    expect(css).toMatchCss(`
+      *, *::before, *::after {
+        transition-duration: 400ms;
+      }
+      .transition-none {
+        transition-property: none;
+      }
+      .transition-all {
+        transition-property: all;
+      }
+    `);
+  });
+});
+
+test('a default property can be set without a default duration', () => {
+  return generatePluginCss({
+    theme: {
+      transitionProperty: {
+        'default': 'opacity',
+      },
+      transitionDuration: {
+        'default': '0',
+        'fast': '200ms',
+        'medium': '400ms',
+        'slow': '600ms',
+      },
+      transitionTimingFunction: {},
+      transitionDelay: {},
+      willChange: {},
+    },
+    variants: {
+      transitionDuration: [],
+    },
+  }).then(css => {
+    expect(css).toMatchCss(`
+      *, *::before, *::after {
+        transition-property: opacity;
+      }
+      .transition-fast {
+        transition-duration: 200ms;
+      }
+      .transition-medium {
+        transition-duration: 400ms;
+      }
+      .transition-slow {
+        transition-duration: 600ms;
+      }
+    `);
+  });
+});
+
+test('a default timing function and a default delay can also be set', () => {
   return generatePluginCss({
     theme: {
       transitionProperty: {
@@ -233,7 +374,7 @@ test('the default duration, timing function and delay can be changed', () => {
         'all': 'all',
       },
       transitionDuration: {
-        'default': '500ms',
+        'medium': '400ms',
       },
       transitionTimingFunction: {
         'default': 'linear',
@@ -246,15 +387,10 @@ test('the default duration, timing function and delay can be changed', () => {
     variants: {
       transitionProperty: [],
       transitionDuration: [],
-      transitionTimingFunction: [],
-      transitionDelay: [],
-      willChange: [],
     },
   }).then(css => {
     expect(css).toMatchCss(`
       *, *::before, *::after {
-        transition-property: none;
-        transition-duration: 500ms;
         transition-timing-function: linear;
         transition-delay: 100ms;
       }
@@ -263,6 +399,9 @@ test('the default duration, timing function and delay can be changed', () => {
       }
       .transition-all {
         transition-property: all;
+      }
+      .transition-medium {
+        transition-duration: 400ms;
       }
     `);
   });
@@ -301,10 +440,6 @@ test('utilities can be customized', () => {
     },
   }).then(css => {
     expect(css).toMatchCss(`
-      *, *::before, *::after {
-        transition-property: none;
-        transition-duration: 250ms;
-      }
       .transition-opacity {
         transition-property: opacity;
       }
@@ -347,6 +482,7 @@ test('variants can be customized', () => {
         'all': 'all',
       },
       transitionDuration: {
+        'default': '250ms',
         '500': '500ms',
       },
       transitionTimingFunction: {
