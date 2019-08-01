@@ -13,6 +13,7 @@ npm install tailwindcss-transitions
 {
   theme: {
     transitionProperty: { // defaults to these values
+      'default': 'auto', // 'auto' resolves to 'all' if the 'default' transition duration is '0s' or '0ms' (like it is by default), otherwise it resolves to 'none'
       'none': 'none',
       'all': 'all',
       'color': 'color',
@@ -23,13 +24,12 @@ npm install tailwindcss-transitions
       'transform': 'transform',
     },
     transitionDuration: { // defaults to these values
-      'default': '250ms',
-      '0': '0ms',
-      '100': '100ms',
-      '250': '250ms',
-      '500': '500ms',
-      '750': '750ms',
-      '1000': '1000ms',
+      'default': '0ms',
+      'fast': '200ms',
+      'medium': '400ms',
+      'slow': '600ms',
+      'slower': '800ms',
+      'slowest': '1000ms',
     },
     transitionTimingFunction: { // defaults to these values
       'default': 'ease',
@@ -42,10 +42,10 @@ npm install tailwindcss-transitions
     transitionDelay: { // defaults to these values
       'default': '0ms',
       '0': '0ms',
-      '100': '100ms',
-      '250': '250ms',
-      '500': '500ms',
-      '750': '750ms',
+      '200': '200ms',
+      '400': '400ms',
+      '600': '600ms',
+      '800': '800ms',
       '1000': '1000ms',
     },
     willChange: { // defaults to these values
@@ -84,11 +84,11 @@ This plugin generates the following utilities:
 }
 
 /* configurable with the "transitionDuration" theme object */
-.transition-0 {
-  transition-duration: 0ms;
+.transition-fast {
+  transition-duration: 200ms;
 }
-.transition-100 {
-  transition-duration: 100ms;
+.transition-medium {
+  transition-duration: 400ms;
 }
 .transition-[key] {
   transition-duration: [value];
@@ -109,8 +109,8 @@ This plugin generates the following utilities:
 .transition-delay-0 {
   transition-delay: 0ms;
 }
-.transition-delay-100 {
-  transition-delay: 100ms;
+.transition-delay-200 {
+  transition-delay: 200ms;
 }
 .transition-delay-[key] {
   transition-delay: [value];
@@ -128,4 +128,4 @@ This plugin generates the following utilities:
 }
 ```
 
-Note: The `transitionDuration`, `transitionTimingFunction`, and `transitionDelay` theme objects optionally accept a `default` key that doesn’t generate any class; it is used to generate base styles applied to all elements and pseudo-elements (`*, *::before, *::after`) so that you can use one of the `transition-[property]` classes without having to define a duration, timing function, or delay every time.
+Note: The `transitionProperty`, `transitionDuration`, `transitionTimingFunction`, and `transitionDelay` theme objects optionally accept a `default` key that doesn’t generate any class; it is used to generate base styles applied to all elements and pseudo-elements (`*, *::before, *::after`) if the value is different from the CSS default. For instance, the default values for CSS’s `transition-property` and `transition-duration` properties are, respectively, `all` and `0s`, which are the same as the `default` `transitionProperty` (actually `auto` but it resolves to `all` in this case) and the `default` `transitionDuration`. If you set the `default` `transitionDuration` to `400ms`, then the `default` `transitionProperty` (still `auto`) will resolve to `none`, and base styles will be generated to apply `transition-property: none` and `transition-duration: 400ms` to all elements. As a result, you can use one of the `transition-[property]` classes without having to define a duration every time. The same is true if you set a `default` `transitionTimingFunction` other than `ease` or a `default` `transitionDelay` other than `0s`/`0ms`, although those are generally less useful.
