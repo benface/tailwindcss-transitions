@@ -423,3 +423,39 @@ test('variants can be customized', () => {
     `);
   });
 });
+
+test('numbers are translated to ms for transitionDelay and transitionDuration', () => {
+  return generatePluginCss({
+    theme: {
+      transitionProperty: {},
+      transitionDuration: {
+        '300': 300,
+      },
+      transitionTimingFunction: {},
+      transitionDelay: {
+        '500': 500,
+      },
+      willChange: {},
+    },
+    variants: {
+      transitionProperty: [],
+      transitionDuration: [],
+      transitionTimingFunction: [],
+      transitionDelay: [],
+      willChange: [],
+    },
+  }).then(css => {
+    expect(css).toMatchCss(`
+      *, *::before, *::after {
+        transition-property: none;
+        transition-duration: 250ms;
+      }
+      .transition-300 {
+        transition-duration: 300ms;
+      }
+      .transition-delay-500 {
+        transition-delay: 500ms;
+      }
+    `);
+  });
+});

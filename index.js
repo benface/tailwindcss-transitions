@@ -94,7 +94,7 @@ module.exports = function() {
         return [
           `.${e(`transition-${modifier}`)}`,
           {
-            transitionDuration: value,
+            transitionDuration: _.isNumber(value) ? `${value}ms` : value,
           },
         ];
       })
@@ -122,7 +122,7 @@ module.exports = function() {
         return [
           `.${e(`transition-delay-${modifier}`)}`,
           {
-            transitionDelay: value,
+            transitionDelay: _.isNumber(value) ? `${value}ms` : value,
           },
         ];
       })
