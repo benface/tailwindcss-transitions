@@ -11,6 +11,7 @@ module.exports = function() {
       'colors': ['color', 'background-color', 'border-color'],
       'opacity': 'opacity',
       'transform': 'transform',
+      'visibility': 'visibility',
     };
     const defaultPropertyVariants = ['responsive'];
     const defaultDurationTheme = {
@@ -48,6 +49,7 @@ module.exports = function() {
       'contents': 'contents',
       'opacity': 'opacity',
       'transform': 'transform',
+      'visibility': 'visibility',
     };
     const defaultWillChangeVariants = ['responsive'];
 
