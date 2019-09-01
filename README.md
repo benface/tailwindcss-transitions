@@ -69,29 +69,62 @@ npm install tailwindcss-transitions
 }
 ```
 
-This plugin generates the following utilities:
+The default configuration generates the following CSS:
 
 ```css
+/* base styles for the default transition duration, timing function, and delay (when they differ from the CSS defaults) */
+*, *::before, *::after {
+  --transition-duration: 250ms;
+  /* when the default timing function is a value other than "ease": */
+  --transition-timing-function: [default-timing-function];
+  /* when the default delay is a value other than zero: */
+  --transition-delay: [default-delay];
+}
+
 /* configurable with the "transitionProperty" theme object */
 .transition-none {
   transition-property: none;
+  transition-duration: 250ms;
+  transition-duration: var(--transition-duration);
 }
 .transition-all {
   transition-property: all;
+  transition-duration: 250ms;
+  transition-duration: var(--transition-duration);
 }
 .transition-[key] {
   transition-property: [value];
+  transition-duration: [default-duration];
+  transition-duration: var(--transition-duration);
+  /* when the default timing function is a value other than "ease": */
+  transition-timing-function: [default-timing-function];
+  transition-timing-function: var(--transition-timing-function);
+  /* when the default delay is a value other than zero: */
+  transition-delay: [default-delay];
+  transition-delay: var(--transition-delay);
 }
 
 /* configurable with the "transitionDuration" theme object */
 .transition-0 {
+  --transition-duration: 0ms;
   transition-duration: 0ms;
+  transition-duration: var(--transition-duration);
 }
 .transition-100 {
+  --transition-duration: 100ms;
   transition-duration: 100ms;
+  transition-duration: var(--transition-duration);
 }
 .transition-[key] {
+  --transition-duration: [value];
   transition-duration: [value];
+  transition-duration: var(--transition-duration);
+  /* when the default timing function is a value other than "ease": */
+  transition-timing-function: [default-timing-function];
+  transition-timing-function: var(--transition-timing-function);
+  /* when the default delay is a value other than zero: */
+  transition-delay: [default-delay];
+  transition-delay: var(--transition-delay);
 }
 
 /* configurable with the "transitionTimingFunction" theme object */
@@ -103,6 +136,9 @@ This plugin generates the following utilities:
 }
 .transition-[key] {
   transition-timing-function: [value];
+  /* when the default timing function is a value other than "ease": */
+  --transition-timing-function: [value];
+  transition-timing-function: var(--transition-timing-function);
 }
 
 /* configurable with the "transitionDelay" theme object */
@@ -114,6 +150,9 @@ This plugin generates the following utilities:
 }
 .transition-delay-[key] {
   transition-delay: [value];
+  /* when the default delay is a value other than zero: */
+  --transition-delay: [value];
+  transition-delay: var(--transition-delay);
 }
 
 /* configurable with the "willChange" theme object */
@@ -128,4 +167,14 @@ This plugin generates the following utilities:
 }
 ```
 
-Note: The `transitionDuration`, `transitionTimingFunction`, and `transitionDelay` theme objects optionally accept a `default` key that doesn’t generate any class; it is used to generate base styles applied to all elements and pseudo-elements (`*, *::before, *::after`) so that you can use one of the `transition-[property]` classes without having to define a duration, timing function, or delay every time.
+Which you can then use in your HTML like this:
+
+```html
+<button class="bg-gray-600 hover:bg-gray-500 transition-bg">
+  Hover me for a lighter background
+</button>
+
+<button class="bg-gray-200 hover:bg-gray-900 text-gray-900 hover:text-gray-200 transition-colors transition-500 transition-linear">
+  Hover me to invert colors
+</button>
+```

@@ -66,13 +66,69 @@ module.exports = function() {
     const defaultTimingFunction = _.defaults({}, timingFunctionTheme, defaultTimingFunctionTheme).default;
     const defaultDelay = _.defaults({}, delayTheme, defaultDelayTheme).default;
 
-    const baseStyles = {
-      '*, *::before, *::after': {
-        transitionProperty: 'none',
-        transitionDuration: _.includes(['0', '0s', '0ms'], defaultDuration) ? null : defaultDuration,
-        transitionTimingFunction: defaultTimingFunction === 'ease' ? null : defaultTimingFunction,
-        transitionDelay: _.includes(['0', '0s', '0ms'], defaultDelay) ? null : defaultDelay,
+    const baseDuration = _.includes(['0', '0s', '0ms'], defaultDuration) ? null : defaultDuration;
+    const baseTimingFunction = defaultTimingFunction === 'ease' ? null : defaultTimingFunction;
+    const baseDelay = _.includes(['0', '0s', '0ms'], defaultDelay) ? null : defaultDelay;
+
+    const baseStyles = (function() {
+      if (baseDuration === null && baseTimingFunction === null && baseDelay === null) {
+        return null;
       }
+      return {
+        '*, *::before, *::after': {
+          '--transition-duration': baseDuration,
+          '--transition-timing-function': baseTimingFunction,
+          '--transition-delay': baseDelay,
+        }
+      };
+    })();
+
+    const durationStyles = value => {
+      if (baseDuration === null) {
+        return {
+          transitionDuration: value,
+        };
+      }
+      return {
+        '--transition-duration': value,
+        transitionDuration: [value, 'var(--transition-duration)'],
+      };
+    };
+
+    const timingFunctionStyles = value => {
+      if (baseTimingFunction === null) {
+        return {
+          transitionTimingFunction: value,
+        };
+      }
+      return {
+        '--transition-timing-function': value,
+        transitionTimingFunction: [value, 'var(--transition-timing-function)'],
+      };
+    };
+
+    const delayStyles = value => {
+      if (baseDelay === null) {
+        return {
+          transitionDelay: value,
+        };
+      }
+      return {
+        '--transition-delay': value,
+        transitionDelay: [value, 'var(--transition-delay)'],
+      };
+    };
+
+    const defaultDurationStyles = baseDuration === null ? {} : {
+      transitionDuration: [baseDuration, 'var(--transition-duration)'],
+    };
+
+    const defaultTimingFunctionStyles = baseTimingFunction === null ? {} : {
+      transitionTimingFunction: [baseTimingFunction, 'var(--transition-timing-function)'],
+    };
+
+    const defaultDelayStyles = baseDelay === null ? {} : {
+      transitionDelay: [baseDelay, 'var(--transition-delay)'],
     };
 
     const propertyUtilities = _.fromPairs(
@@ -81,6 +137,9 @@ module.exports = function() {
           `.${e(`transition-${modifier}`)}`,
           {
             transitionProperty: _.isArray(value) ? value.join(', ') : value,
+            ...defaultDurationStyles,
+            ...defaultTimingFunctionStyles,
+            ...defaultDelayStyles,
           },
         ];
       })
@@ -94,7 +153,9 @@ module.exports = function() {
         return [
           `.${e(`transition-${modifier}`)}`,
           {
-            transitionDuration: value,
+            ...durationStyles(value),
+            ...defaultTimingFunctionStyles,
+            ...defaultDelayStyles,
           },
         ];
       })
@@ -108,7 +169,7 @@ module.exports = function() {
         return [
           `.${e(`transition-${modifier}`)}`,
           {
-            transitionTimingFunction: value,
+            ...timingFunctionStyles(value),
           },
         ];
       })
@@ -122,7 +183,7 @@ module.exports = function() {
         return [
           `.${e(`transition-delay-${modifier}`)}`,
           {
-            transitionDelay: value,
+            ...delayStyles(value),
           },
         ];
       })
@@ -139,7 +200,9 @@ module.exports = function() {
       })
     );
 
-    addBase(baseStyles);
+    if (baseStyles) {
+      addBase(baseStyles);
+    }
     addUtilities(propertyUtilities, propertyVariants);
     addUtilities(durationUtilities, durationVariants);
     addUtilities(timingFunctionUtilities, timingFunctionVariants);
