@@ -178,3 +178,5 @@ Which you can then use in your HTML like this:
   Hover me to invert colors
 </button>
 ```
+
+Note: The `transitionDuration`, `transitionTimingFunction`, and `transitionDelay` theme objects accept a `default` key that doesn’t generate any class; it is used to define a custom property on all elements and pseudo-elements (`*, *::before, *::after`) if the value differs from the CSS-defined default. These custom properties are then used to set actual properties on elements that have a `transition-[property]` or `transition-[duration]` class, so that you don’t have to define a duration, timing function, or delay every time.
