@@ -92,8 +92,9 @@ The default configuration generates the following CSS:
   transition-duration: 250ms;
   transition-duration: var(--transition-duration);
 }
-.transition-[key] {
-  transition-property: [value];
+.transition-[property-key] {
+  transition-property: [property-value];
+  /* when the default duration is a value other than zero: */
   transition-duration: [default-duration];
   transition-duration: var(--transition-duration);
   /* when the default timing function is a value other than "ease": */
@@ -115,9 +116,10 @@ The default configuration generates the following CSS:
   transition-duration: 100ms;
   transition-duration: var(--transition-duration);
 }
-.transition-[key] {
-  --transition-duration: [value];
-  transition-duration: [value];
+.transition-[duration-key] {
+  transition-duration: [duration-value];
+  /* when the default duration is a value other than zero: */
+  --transition-duration: [duration-value];
   transition-duration: var(--transition-duration);
   /* when the default timing function is a value other than "ease": */
   transition-timing-function: [default-timing-function];
@@ -134,10 +136,10 @@ The default configuration generates the following CSS:
 .transition-ease {
   transition-timing-function: ease;
 }
-.transition-[key] {
-  transition-timing-function: [value];
+.transition-[timing-function-key] {
+  transition-timing-function: [timing-function-value];
   /* when the default timing function is a value other than "ease": */
-  --transition-timing-function: [value];
+  --transition-timing-function: [timing-function-value];
   transition-timing-function: var(--transition-timing-function);
 }
 

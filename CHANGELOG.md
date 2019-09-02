@@ -10,7 +10,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 **Release `2.1.0-beta.1` was deprecated and reverted, so the following changes were made from release `2.0.1`:**
 
 ### Changed
-- Changed the implementation of the `default` duration, timing function, and delay to prevent generating base styles that change the value of `transition-property`, `transition-duration`, `transition-timing-function`, and `transition-delay` on all elements, in order to prevent conflicts with libraries that don’t expect these properties to have a value different from their CSS-defined default
+- Changed the implementation of the `default` duration, timing function, and delay to prevent generating base styles that change the value of `transition-property`, `transition-duration`, `transition-timing-function`, and `transition-delay` on all elements, in order to prevent conflicts with libraries that don’t expect these properties to differ from their CSS-defined default
 - Base styles targeting all elements are still generated if a `default` duration, timing function, and/or delay is set (which is the case by default: the `default` duration is `250ms`), but they define custom properties that are very unlikely to conflict with third-party libraries (e.g. `--transition-duration`); these are then used to set actual properties on elements that have a `transition-[property]` or `transition-[duration]` class
 - As a result, it is now possible to only use a transition duration utility (e.g. `transition-500`) on an element to make it transition all its properties; no need for `transition-all` anymore, since the default value of `transition-property` is already `all`
 
