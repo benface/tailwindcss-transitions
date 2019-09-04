@@ -36,50 +36,77 @@ test('the plugin generates some utilities and responsive variants by default', (
   return generatePluginCss().then(css => {
     expect(css).toMatchCss(`
       *, *::before, *::after {
-        transition-property: none;
-        transition-duration: 250ms;
+        --transition-duration: 250ms;
       }
       .transition-none {
         transition-property: none;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-all {
         transition-property: all;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-color {
         transition-property: color;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-bg {
         transition-property: background-color;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-border {
         transition-property: border-color;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-colors {
         transition-property: color, background-color, border-color;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-opacity {
         transition-property: opacity;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-transform {
         transition-property: transform;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-0 {
+        --transition-duration: 0ms;
         transition-duration: 0ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-100 {
+        --transition-duration: 100ms;
         transition-duration: 100ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-250 {
+        --transition-duration: 250ms;
         transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-500 {
+        --transition-duration: 500ms;
         transition-duration: 500ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-750 {
+        --transition-duration: 750ms;
         transition-duration: 750ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-1000 {
+        --transition-duration: 1000ms;
         transition-duration: 1000ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-linear {
         transition-timing-function: linear;
@@ -132,45 +159,73 @@ test('the plugin generates some utilities and responsive variants by default', (
       @media (min-width: 640px) {
         .sm\\:transition-none {
           transition-property: none;
+          transition-duration: 250ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-all {
           transition-property: all;
+          transition-duration: 250ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-color {
           transition-property: color;
+          transition-duration: 250ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-bg {
           transition-property: background-color;
+          transition-duration: 250ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-border {
           transition-property: border-color;
+          transition-duration: 250ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-colors {
           transition-property: color, background-color, border-color;
+          transition-duration: 250ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-opacity {
           transition-property: opacity;
+          transition-duration: 250ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-transform {
           transition-property: transform;
+          transition-duration: 250ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-0 {
+          --transition-duration: 0ms;
           transition-duration: 0ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-100 {
+          --transition-duration: 100ms;
           transition-duration: 100ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-250 {
+          --transition-duration: 250ms;
           transition-duration: 250ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-500 {
+          --transition-duration: 500ms;
           transition-duration: 500ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-750 {
+          --transition-duration: 750ms;
           transition-duration: 750ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-1000 {
+          --transition-duration: 1000ms;
           transition-duration: 1000ms;
+          transition-duration: var(--transition-duration);
         }
         .sm\\:transition-linear {
           transition-timing-function: linear;
@@ -234,12 +289,15 @@ test('the default duration, timing function and delay can be changed', () => {
       },
       transitionDuration: {
         'default': '500ms',
+        'fast': '250ms',
       },
       transitionTimingFunction: {
         'default': 'linear',
+        'ease': 'ease',
       },
       transitionDelay: {
         'default': '100ms',
+        'none': '0ms',
       },
       willChange: {},
     },
@@ -253,44 +311,71 @@ test('the default duration, timing function and delay can be changed', () => {
   }).then(css => {
     expect(css).toMatchCss(`
       *, *::before, *::after {
-        transition-property: none;
-        transition-duration: 500ms;
-        transition-timing-function: linear;
-        transition-delay: 100ms;
+        --transition-duration: 500ms;
+        --transition-timing-function: linear;
+        --transition-delay: 100ms;
       }
       .transition-none {
         transition-property: none;
+        transition-duration: 500ms;
+        transition-duration: var(--transition-duration);
+        transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
+        transition-delay: 100ms;
+        transition-delay: var(--transition-delay);
       }
       .transition-all {
         transition-property: all;
+        transition-duration: 500ms;
+        transition-duration: var(--transition-duration);
+        transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
+        transition-delay: 100ms;
+        transition-delay: var(--transition-delay);
+      }
+      .transition-fast {
+        --transition-duration: 250ms;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
+        transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
+        transition-delay: 100ms;
+        transition-delay: var(--transition-delay);
+      }
+      .transition-ease {
+        --transition-timing-function: ease;
+        transition-timing-function: ease;
+        transition-timing-function: var(--transition-timing-function);
+      }
+      .transition-delay-none {
+        --transition-delay: 0ms;
+        transition-delay: 0ms;
+        transition-delay: var(--transition-delay);
       }
     `);
   });
 });
 
-test('utilities can be customized', () => {
+test('the default duration can be removed', () => {
   return generatePluginCss({
     theme: {
       transitionProperty: {
-        'opacity': 'opacity',
-        'transform': 'transform',
+        'none': 'none',
+        'all': 'all',
       },
       transitionDuration: {
-        '1/2s': '0.5s',
-        '1s': '1s',
-        '2s': '2s',
+        'default': '0ms',
+        'fast': '250ms',
+        'medium': '500ms',
+        'slow': '1000ms',
       },
       transitionTimingFunction: {
         'ease': 'ease',
-        'linear': 'linear',
       },
       transitionDelay: {
-        '1/2s': '0.5s',
+        '0': '0ms',
       },
-      willChange: {
-        'opacity': 'opacity',
-        'transform': 'transform',
-      },
+      willChange: {},
     },
     variants: {
       transitionProperty: [],
@@ -301,39 +386,26 @@ test('utilities can be customized', () => {
     },
   }).then(css => {
     expect(css).toMatchCss(`
-      *, *::before, *::after {
+      .transition-none {
         transition-property: none;
+      }
+      .transition-all {
+        transition-property: all;
+      }
+      .transition-fast {
         transition-duration: 250ms;
       }
-      .transition-opacity {
-        transition-property: opacity;
+      .transition-medium {
+        transition-duration: 500ms;
       }
-      .transition-transform {
-        transition-property: transform;
-      }
-      .transition-1\\/2s {
-        transition-duration: 0.5s;
-      }
-      .transition-1s {
-        transition-duration: 1s;
-      }
-      .transition-2s {
-        transition-duration: 2s;
+      .transition-slow {
+        transition-duration: 1000ms;
       }
       .transition-ease {
         transition-timing-function: ease;
       }
-      .transition-linear {
-        transition-timing-function: linear;
-      }
-      .transition-delay-1\\/2s {
-        transition-delay: 0.5s;
-      }
-      .will-change-opacity {
-        will-change: opacity;
-      }
-      .will-change-transform {
-        will-change: transform;
+      .transition-delay-0 {
+        transition-delay: 0ms;
       }
     `);
   });
@@ -345,11 +417,13 @@ test('variants can be customized', () => {
       transitionProperty: {
         'none': 'none',
         'all': 'all',
+        'bg': 'background-color',
       },
       transitionDuration: {
         '500': '500ms',
       },
       transitionTimingFunction: {
+        'default': 'linear',
         'ease': 'ease',
         'linear': 'linear',
       },
@@ -363,51 +437,101 @@ test('variants can be customized', () => {
     variants: {
       transitionProperty: ['hover'],
       transitionDuration: ['active'],
-      transitionTimingFunction: ['hover', 'group-hover'],
+      transitionTimingFunction: ['group-hover', 'focus'],
       transitionDelay: ['responsive'],
       willChange: [],
     },
   }).then(css => {
     expect(css).toMatchCss(`
       *, *::before, *::after {
-        transition-property: none;
-        transition-duration: 250ms;
+        --transition-duration: 250ms;
+        --transition-timing-function: linear;
       }
       .transition-none {
         transition-property: none;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
+        transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
       }
       .transition-all {
         transition-property: all;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
+        transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
+      }
+      .transition-bg {
+        transition-property: background-color;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
+        transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
       }
       .hover\\:transition-none:hover {
         transition-property: none;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
+        transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
       }
       .hover\\:transition-all:hover {
         transition-property: all;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
+        transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
+      }
+      .hover\\:transition-bg:hover {
+        transition-property: background-color;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
+        transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
       }
       .transition-500 {
+        --transition-duration: 500ms;
         transition-duration: 500ms;
+        transition-duration: var(--transition-duration);
+        transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
       }
       .active\\:transition-500:active {
+        --transition-duration: 500ms;
         transition-duration: 500ms;
+        transition-duration: var(--transition-duration);
+        transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
       }
       .transition-ease {
+        --transition-timing-function: ease;
         transition-timing-function: ease;
+        transition-timing-function: var(--transition-timing-function);
       }
       .transition-linear {
+        --transition-timing-function: linear;
         transition-timing-function: linear;
-      }
-      .hover\\:transition-ease:hover {
-        transition-timing-function: ease;
-      }
-      .hover\\:transition-linear:hover {
-        transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
       }
       .group:hover .group-hover\\:transition-ease {
+        --transition-timing-function: ease;
         transition-timing-function: ease;
+        transition-timing-function: var(--transition-timing-function);
       }
       .group:hover .group-hover\\:transition-linear {
+        --transition-timing-function: linear;
         transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
+      }
+      .focus\\:transition-ease:focus {
+        --transition-timing-function: ease;
+        transition-timing-function: ease;
+        transition-timing-function: var(--transition-timing-function);
+      }
+      .focus\\:transition-linear:focus {
+        --transition-timing-function: linear;
+        transition-timing-function: linear;
+        transition-timing-function: var(--transition-timing-function);
       }
       .transition-delay-500 {
         transition-delay: 500ms;
@@ -447,11 +571,12 @@ test('numbers are translated to ms for transitionDelay and transitionDuration', 
   }).then(css => {
     expect(css).toMatchCss(`
       *, *::before, *::after {
-        transition-property: none;
-        transition-duration: 250ms;
+        --transition-duration: 250ms;
       }
       .transition-300 {
+        --transition-duration: 300ms;
         transition-duration: 300ms;
+        transition-duration: var(--transition-duration);
       }
       .transition-delay-500 {
         transition-delay: 500ms;
