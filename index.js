@@ -1,5 +1,7 @@
 const _ = require('lodash');
 
+const time = time => _.isNumber(time) ? `${time}ms` : time;
+
 module.exports = function() {
   return ({ theme, variants, e, addBase, addUtilities }) => {
     const defaultPropertyTheme = {
@@ -62,9 +64,9 @@ module.exports = function() {
     const willChangeTheme = theme('willChange', defaultWillChangeTheme);
     const willChangeVariants = variants('willChange', defaultWillChangeVariants);
 
-    const defaultDuration = _.defaults({}, durationTheme, defaultDurationTheme).default;
+    const defaultDuration = time(_.defaults({}, durationTheme, defaultDurationTheme).default);
     const defaultTimingFunction = _.defaults({}, timingFunctionTheme, defaultTimingFunctionTheme).default;
-    const defaultDelay = _.defaults({}, delayTheme, defaultDelayTheme).default;
+    const defaultDelay = time(_.defaults({}, delayTheme, defaultDelayTheme).default);
 
     const baseDuration = _.includes(['0', '0s', '0ms'], defaultDuration) ? null : defaultDuration;
     const baseTimingFunction = defaultTimingFunction === 'ease' ? null : defaultTimingFunction;
@@ -84,16 +86,14 @@ module.exports = function() {
     })();
 
     const durationStyles = value => {
-      const duration = _.isNumber(value) ? `${value}ms` : value;
-
       if (baseDuration === null) {
         return {
-          transitionDuration: duration,
+          transitionDuration: time(value),
         };
       }
       return {
-        '--transition-duration': duration,
-        transitionDuration: [duration, 'var(--transition-duration)'],
+        '--transition-duration': time(value),
+        transitionDuration: [time(value), 'var(--transition-duration)'],
       };
     };
 
@@ -110,16 +110,14 @@ module.exports = function() {
     };
 
     const delayStyles = value => {
-      const delay = _.isNumber(value) ? `${value}ms` : value;
-
       if (baseDelay === null) {
         return {
-          transitionDelay: delay,
+          transitionDelay: time(value),
         };
       }
       return {
-        '--transition-delay': delay,
-        transitionDelay: [delay, 'var(--transition-delay)'],
+        '--transition-delay': time(value),
+        transitionDelay: [time(value), 'var(--transition-delay)'],
       };
     };
 

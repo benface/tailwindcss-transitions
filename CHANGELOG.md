@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project mostly adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2019-09-04
+
+### Changed since 2.1.0-beta.2
+- Allowed for durations and delays to be defined as numbers but be output as `ms`
+
+### Changed since 2.0.x
+- Changed the implementation of the `default` duration, timing function, and delay to prevent generating base styles that change the value of `transition-property`, `transition-duration`, `transition-timing-function`, and `transition-delay` on all elements, in order to prevent conflicts with libraries that don’t expect these properties to differ from their CSS-defined default
+- Base styles targeting all elements are still generated if a `default` duration, timing function, and/or delay is set (which is the case by default: the `default` duration is `250ms`), but they define custom properties that are very unlikely to conflict with third-party libraries (e.g. `--transition-duration`); these are then used to set actual properties on elements that have a `transition-[property]` or `transition-[duration]` class
+- As a result, it is now possible to only use a transition duration utility (e.g. `transition-500`) on an element to make it transition all its properties; no need for `transition-all` anymore, since the default value of `transition-property` is already `all`
+
 ## [2.1.0-beta.2] - 2019-09-01
 
 **Release `2.1.0-beta.1` was deprecated and reverted, so the following changes were made from release `2.0.1`:**
@@ -94,7 +104,8 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 Initial release
 
-[Unreleased]: https://github.com/benface/tailwindcss-transitions/compare/v2.1.0-beta.2...HEAD
+[Unreleased]: https://github.com/benface/tailwindcss-transitions/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/benface/tailwindcss-transitions/compare/v2.1.0-beta.2...v2.1.0
 [2.1.0-beta.2]: https://github.com/benface/tailwindcss-transitions/compare/v2.0.1...v2.1.0-beta.2
 [2.1.0-beta.1]: https://github.com/benface/tailwindcss-transitions/compare/v2.0.1...v2.1.0-beta.1
 [2.0.1]: https://github.com/benface/tailwindcss-transitions/compare/v2.0.0...v2.0.1

@@ -548,12 +548,13 @@ test('variants can be customized', () => {
   });
 });
 
-test('numbers are translated to ms for transitionDelay and transitionDuration', () => {
+test('delays and durations defined as numbers are translated to ms', () => {
   return generatePluginCss({
     theme: {
       transitionProperty: {},
       transitionDuration: {
-        '300': 300,
+        'default': 500,
+        '250': 250,
       },
       transitionTimingFunction: {},
       transitionDelay: {
@@ -571,11 +572,11 @@ test('numbers are translated to ms for transitionDelay and transitionDuration', 
   }).then(css => {
     expect(css).toMatchCss(`
       *, *::before, *::after {
-        --transition-duration: 250ms;
+        --transition-duration: 500ms;
       }
-      .transition-300 {
-        --transition-duration: 300ms;
-        transition-duration: 300ms;
+      .transition-250 {
+        --transition-duration: 250ms;
+        transition-duration: 250ms;
         transition-duration: var(--transition-duration);
       }
       .transition-delay-500 {
