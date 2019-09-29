@@ -548,7 +548,7 @@ test('variants can be customized', () => {
   });
 });
 
-test('delays and durations defined as numbers are translated to ms', () => {
+test('durations and delays defined as numbers are translated to ms', () => {
   return generatePluginCss({
     theme: {
       transitionProperty: {},

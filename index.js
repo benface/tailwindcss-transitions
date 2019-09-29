@@ -72,18 +72,20 @@ module.exports = function() {
     const baseTimingFunction = defaultTimingFunction === 'ease' ? null : defaultTimingFunction;
     const baseDelay = _.includes(['0', '0s', '0ms'], defaultDelay) ? null : defaultDelay;
 
-    const baseStyles = (function() {
-      if (baseDuration === null && baseTimingFunction === null && baseDelay === null) {
-        return null;
-      }
-      return {
-        '*, *::before, *::after': {
-          '--transition-duration': baseDuration,
-          '--transition-timing-function': baseTimingFunction,
-          '--transition-delay': baseDelay,
+    const baseStyles = {
+      ...(function() {
+        if (baseDuration === null && baseTimingFunction === null && baseDelay === null) {
+          return {};
         }
-      };
-    })();
+        return {
+          '*, *::before, *::after': {
+            '--transition-duration': baseDuration,
+            '--transition-timing-function': baseTimingFunction,
+            '--transition-delay': baseDelay,
+          }
+        };
+      })(),
+    };
 
     const durationStyles = value => {
       if (baseDuration === null) {
@@ -121,16 +123,16 @@ module.exports = function() {
       };
     };
 
-    const defaultDurationStyles = baseDuration === null ? {} : {
-      transitionDuration: [baseDuration, 'var(--transition-duration)'],
+    const defaultDurationStyles = {
+      transitionDuration: baseDuration === null ? null : [baseDuration, 'var(--transition-duration)'],
     };
 
-    const defaultTimingFunctionStyles = baseTimingFunction === null ? {} : {
-      transitionTimingFunction: [baseTimingFunction, 'var(--transition-timing-function)'],
+    const defaultTimingFunctionStyles = {
+      transitionTimingFunction: baseTimingFunction === null ? null : [baseTimingFunction, 'var(--transition-timing-function)'],
     };
 
-    const defaultDelayStyles = baseDelay === null ? {} : {
-      transitionDelay: [baseDelay, 'var(--transition-delay)'],
+    const defaultDelayStyles = {
+      transitionDelay: baseDelay === null ? null : [baseDelay, 'var(--transition-delay)'],
     };
 
     const propertyUtilities = _.fromPairs(
@@ -202,9 +204,7 @@ module.exports = function() {
       })
     );
 
-    if (baseStyles) {
-      addBase(baseStyles);
-    }
+    addBase(baseStyles);
     addUtilities(propertyUtilities, propertyVariants);
     addUtilities(durationUtilities, durationVariants);
     addUtilities(timingFunctionUtilities, timingFunctionVariants);
