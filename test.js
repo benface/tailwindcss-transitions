@@ -48,8 +48,13 @@ test('the plugin generates some utilities and responsive variants by default', (
         transition-duration: 250ms;
         transition-duration: var(--transition-duration);
       }
-      .transition-color {
-        transition-property: color;
+      .transition {
+        transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
+      }
+      .transition-colors {
+        transition-property: background-color, border-color, color, fill, stroke;
         transition-duration: 250ms;
         transition-duration: var(--transition-duration);
       }
@@ -63,13 +68,18 @@ test('the plugin generates some utilities and responsive variants by default', (
         transition-duration: 250ms;
         transition-duration: var(--transition-duration);
       }
-      .transition-colors {
-        transition-property: color, background-color, border-color;
+      .transition-color {
+        transition-property: color;
         transition-duration: 250ms;
         transition-duration: var(--transition-duration);
       }
       .transition-opacity {
         transition-property: opacity;
+        transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
+      }
+      .transition-shadow {
+        transition-property: box-shadow;
         transition-duration: 250ms;
         transition-duration: var(--transition-duration);
       }
@@ -83,14 +93,44 @@ test('the plugin generates some utilities and responsive variants by default', (
         transition-duration: 0ms;
         transition-duration: var(--transition-duration);
       }
+      .transition-50 {
+        --transition-duration: 50ms;
+        transition-duration: 50ms;
+        transition-duration: var(--transition-duration);
+      }
+      .transition-75 {
+        --transition-duration: 75ms;
+        transition-duration: 75ms;
+        transition-duration: var(--transition-duration);
+      }
       .transition-100 {
         --transition-duration: 100ms;
         transition-duration: 100ms;
         transition-duration: var(--transition-duration);
       }
+      .transition-150 {
+        --transition-duration: 150ms;
+        transition-duration: 150ms;
+        transition-duration: var(--transition-duration);
+      }
+      .transition-200 {
+        --transition-duration: 200ms;
+        transition-duration: 200ms;
+        transition-duration: var(--transition-duration);
+      }
       .transition-250 {
         --transition-duration: 250ms;
         transition-duration: 250ms;
+        transition-duration: var(--transition-duration);
+      }
+      .transition-300 {
+        --transition-duration: 300ms;
+        transition-duration: 300ms;
+        transition-duration: var(--transition-duration);
+      }
+      .transition-400 {
+        --transition-duration: 400ms;
+        transition-duration: 400ms;
         transition-duration: var(--transition-duration);
       }
       .transition-500 {
@@ -167,8 +207,13 @@ test('the plugin generates some utilities and responsive variants by default', (
           transition-duration: 250ms;
           transition-duration: var(--transition-duration);
         }
-        .sm\\:transition-color {
-          transition-property: color;
+        .sm\\:transition {
+          transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+          transition-duration: 250ms;
+          transition-duration: var(--transition-duration);
+        }
+        .sm\\:transition-colors {
+          transition-property: background-color, border-color, color, fill, stroke;
           transition-duration: 250ms;
           transition-duration: var(--transition-duration);
         }
@@ -182,13 +227,18 @@ test('the plugin generates some utilities and responsive variants by default', (
           transition-duration: 250ms;
           transition-duration: var(--transition-duration);
         }
-        .sm\\:transition-colors {
-          transition-property: color, background-color, border-color;
+        .sm\\:transition-color {
+          transition-property: color;
           transition-duration: 250ms;
           transition-duration: var(--transition-duration);
         }
         .sm\\:transition-opacity {
           transition-property: opacity;
+          transition-duration: 250ms;
+          transition-duration: var(--transition-duration);
+        }
+        .sm\\:transition-shadow {
+          transition-property: box-shadow;
           transition-duration: 250ms;
           transition-duration: var(--transition-duration);
         }
@@ -202,14 +252,44 @@ test('the plugin generates some utilities and responsive variants by default', (
           transition-duration: 0ms;
           transition-duration: var(--transition-duration);
         }
+        .sm\\:transition-50 {
+          --transition-duration: 50ms;
+          transition-duration: 50ms;
+          transition-duration: var(--transition-duration);
+        }
+        .sm\\:transition-75 {
+          --transition-duration: 75ms;
+          transition-duration: 75ms;
+          transition-duration: var(--transition-duration);
+        }
         .sm\\:transition-100 {
           --transition-duration: 100ms;
           transition-duration: 100ms;
           transition-duration: var(--transition-duration);
         }
+        .sm\\:transition-150 {
+          --transition-duration: 150ms;
+          transition-duration: 150ms;
+          transition-duration: var(--transition-duration);
+        }
+        .sm\\:transition-200 {
+          --transition-duration: 200ms;
+          transition-duration: 200ms;
+          transition-duration: var(--transition-duration);
+        }
         .sm\\:transition-250 {
           --transition-duration: 250ms;
           transition-duration: 250ms;
+          transition-duration: var(--transition-duration);
+        }
+        .sm\\:transition-300 {
+          --transition-duration: 300ms;
+          transition-duration: 300ms;
+          transition-duration: var(--transition-duration);
+        }
+        .sm\\:transition-400 {
+          --transition-duration: 400ms;
+          transition-duration: 400ms;
           transition-duration: var(--transition-duration);
         }
         .sm\\:transition-500 {

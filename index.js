@@ -7,19 +7,27 @@ module.exports = function() {
     const defaultPropertyTheme = {
       'none': 'none',
       'all': 'all',
-      'color': 'color',
+      'default': ['background-color', 'border-color', 'color', 'fill', 'stroke', 'opacity', 'box-shadow', 'transform'],
+      'colors': ['background-color', 'border-color', 'color', 'fill', 'stroke'],
       'bg': 'background-color',
       'border': 'border-color',
-      'colors': ['color', 'background-color', 'border-color'],
+      'color': 'color',
       'opacity': 'opacity',
+      'shadow': 'box-shadow',
       'transform': 'transform',
     };
     const defaultPropertyVariants = ['responsive'];
     const defaultDurationTheme = {
       'default': '250ms',
       '0': '0ms',
+      '50': '50ms',
+      '75': '75ms',
       '100': '100ms',
+      '150': '150ms',
+      '200': '200ms',
       '250': '250ms',
+      '300': '300ms',
+      '400': '400ms',
       '500': '500ms',
       '750': '750ms',
       '1000': '1000ms',
@@ -138,7 +146,7 @@ module.exports = function() {
     const propertyUtilities = _.fromPairs(
       _.map(propertyTheme, (value, modifier) => {
         return [
-          `.${e(`transition-${modifier}`)}`,
+          `.${e(`transition${modifier === 'default' ? '' : `-${modifier}`}`)}`,
           {
             transitionProperty: _.isArray(value) ? value.join(', ') : value,
             ...defaultDurationStyles,

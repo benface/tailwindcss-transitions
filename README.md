@@ -10,23 +10,31 @@ npm install tailwindcss-transitions
 
 ```js
 // tailwind.config.js
-{
+module.exports = {
   theme: {
     transitionProperty: { // defaults to these values
       'none': 'none',
       'all': 'all',
-      'color': 'color',
+      'default': ['background-color', 'border-color', 'color', 'fill', 'stroke', 'opacity', 'box-shadow', 'transform'],
+      'colors': ['background-color', 'border-color', 'color', 'fill', 'stroke'],
       'bg': 'background-color',
       'border': 'border-color',
-      'colors': ['color', 'background-color', 'border-color'],
+      'color': 'color',
       'opacity': 'opacity',
+      'shadow': 'box-shadow',
       'transform': 'transform',
     },
     transitionDuration: { // defaults to these values
       'default': '250ms',
       '0': '0ms',
+      '50': '50ms',
+      '75': '75ms',
       '100': '100ms',
+      '150': '150ms',
+      '200': '200ms',
       '250': '250ms',
+      '300': '300ms',
+      '400': '400ms',
       '500': '500ms',
       '750': '750ms',
       '1000': '1000ms',
@@ -66,7 +74,7 @@ npm install tailwindcss-transitions
   plugins: [
     require('tailwindcss-transitions')(),
   ],
-}
+};
 ```
 
 The default configuration generates the following CSS:
@@ -92,6 +100,11 @@ The default configuration generates the following CSS:
   transition-duration: 250ms;
   transition-duration: var(--transition-duration);
 }
+.transition {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-duration: 250ms;
+  transition-duration: var(--transition-duration);
+}
 .transition-[property-key] {
   transition-property: [property-value];
   /* when the default duration is a value other than zero: */
@@ -111,9 +124,9 @@ The default configuration generates the following CSS:
   transition-duration: 0ms;
   transition-duration: var(--transition-duration);
 }
-.transition-100 {
-  --transition-duration: 100ms;
-  transition-duration: 100ms;
+.transition-50 {
+  --transition-duration: 50ms;
+  transition-duration: 50ms;
   transition-duration: var(--transition-duration);
 }
 .transition-[duration-key] {
@@ -181,4 +194,4 @@ Which you can then use in your HTML like this:
 </button>
 ```
 
-Note: The `transitionDuration`, `transitionTimingFunction`, and `transitionDelay` theme objects accept a `default` key that doesn’t generate any class; it is used to define a custom property on all elements and pseudo-elements (`*, *::before, *::after`) if the value differs from the CSS-defined default. These custom properties are then used to set actual properties on elements that have a `transition-[property]` or `transition-[duration]` class, so that you don’t have to define a duration, timing function, or delay every time.
+Note: The `transitionProperty`, `transitionDuration`, `transitionTimingFunction`, and `transitionDelay` theme objects accept a `default` key. For `transitionProperty`, it generates a simple `transition` class (instead of `transition-default`), but for the other three, `default` doesn’t generate any class; it is used to define a custom property on all elements and pseudo-elements (`*, *::before, *::after`) if the value differs from the CSS-defined default. These custom properties are then used to set actual properties on elements that have a `transition-[property]` or `transition-[duration]` class, so that you don’t have to define a duration, timing function, or delay every time.

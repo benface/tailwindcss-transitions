@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project mostly adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2020-02-03
+
+### Added
+- Added a `default` transition property, which generates a simple `transition` class and includes all the properties from `colors` as well as `opacity`, `box-shadow`, and `transform` (taken from Tailwind 1.2)
+- Added a `shadow` transition property (taken from Tailwind 1.2)
+- Added `50`, `75`, `150`, `200`, `300`, and `400` transition durations
+
+### Changed
+- The `transition-colors` utility now includes the `fill` and `stroke` properties, in addition to `background-color`, `border-color`, and `color` (taken from Tailwind 1.2)
+
 ## [2.1.0] - 2019-09-04
 
 ### Changed since 2.1.0-beta.2
@@ -104,7 +114,8 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 Initial release
 
-[Unreleased]: https://github.com/benface/tailwindcss-transitions/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/benface/tailwindcss-transitions/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/benface/tailwindcss-transitions/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/benface/tailwindcss-transitions/compare/v2.1.0-beta.2...v2.1.0
 [2.1.0-beta.2]: https://github.com/benface/tailwindcss-transitions/compare/v2.0.1...v2.1.0-beta.2
 [2.1.0-beta.1]: https://github.com/benface/tailwindcss-transitions/compare/v2.0.1...v2.1.0-beta.1
