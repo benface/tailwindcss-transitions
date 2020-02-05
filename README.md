@@ -1,3 +1,7 @@
+# ⛔️ DEPRECATED
+
+Tailwind CSS 1.2 (released in February 2020) has utilities for transition [property](https://tailwindcss.com/docs/transition-property), [duration](https://tailwindcss.com/docs/transition-duration, and [timing function](https://tailwindcss.com/docs/transition-timing-function). It doesn’t have transition delay or `will-change` utilities (yet), nor does it have a way to define a default transition duration or timing function, but I feel like keeping this plugin around would be more confusing than helpful since it uses similar (or identical in some cases) class names as the core transition utilities. Feel free to fork it if you want, but I recommend migrating to Tailwind’s official solution and write custom utilities for `transition-delay` and `will-change` when needed.
+
 # Transitions Plugin for Tailwind CSS
 
 ## Installation
